@@ -115,6 +115,7 @@ public class Controller {
     private void setupTableColumns() {
         plantTable.getColumns().clear();
 
+        // Существующие колонки остаются без изменений...
         TableColumn<Plant, String> nameCol = new TableColumn<>("Название");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
@@ -140,6 +141,12 @@ public class Controller {
 
         TableColumn<Plant, String> healthCol = new TableColumn<>("Здоровье");
         healthCol.setCellValueFactory(new PropertyValueFactory<>("healthStatus"));
+
+        TableColumn<Plant, String> fullGrowthCol = new TableColumn<>("Прогноз роста");
+        fullGrowthCol.setCellValueFactory(cellData -> {
+            String forecast = cellData.getValue().getFullGrowthForecast();
+            return new SimpleStringProperty(forecast);
+        });
 
         TableColumn<Plant, String> wateringCol = new TableColumn<>("Полив через");
         wateringCol.setCellValueFactory(cellData -> {
@@ -185,8 +192,10 @@ public class Controller {
             return new SimpleStringProperty(date != null ? date.format(dateFormatter) : "—");
         });
 
-        plantTable.getColumns().addAll(nameCol, heightCol, growthCol, healthCol,
+        // Добавляем все колонки в таблицу (новая колонка добавлена после healthCol)
+        plantTable.getColumns().addAll(nameCol, heightCol, growthCol, healthCol, fullGrowthCol,
                 wateringCol, repottingCol, repottingForecastCol, lastWaterCol, lastRepottingCol, plantingDateCol);
+
         plantTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 

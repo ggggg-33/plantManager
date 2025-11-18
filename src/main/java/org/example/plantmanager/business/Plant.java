@@ -33,6 +33,63 @@ public class Plant {
     }
 
     /**
+     * Расчет максимальной высоты растения по его названию
+     */
+    private double calculateMaxHeight(String plantName) {
+        String nameLower = plantName.toLowerCase();
+
+        if (nameLower.contains("фикус") || nameLower.contains("монстера") ||
+                nameLower.contains("пальма") || nameLower.contains("драцена")) {
+            return 200.0; // Крупные растения
+        } else if (nameLower.contains("фиалка") || nameLower.contains("кактус") ||
+                nameLower.contains("суккулент") || nameLower.contains("алоэ")) {
+            return 30.0; // Маленькие растения
+        } else if (nameLower.contains("орхидея") || nameLower.contains("антуриум") ||
+                nameLower.contains("спатифиллум")) {
+            return 60.0; // Средние растения
+        } else if (nameLower.contains("плющ") || nameLower.contains("традесканция") ||
+                nameLower.contains("хлорофитум")) {
+            return 100.0; // Вьющиеся растения
+        } else {
+            return 50.0; // Среднее значение по умолчанию
+        }
+    }
+
+    /**
+     * Прогноз полного роста
+     */
+    public String getFullGrowthForecast() {
+        if (growthRate <= 0) {
+            return "Растение не растет";
+        }
+
+        double maxHeight = calculateMaxHeight(name);
+
+        if (currentHeight >= maxHeight) {
+            return "Достигло максимума";
+        }
+
+        double remainingHeight = maxHeight - currentHeight;
+        long monthsToFullGrowth = (long) Math.ceil(remainingHeight / growthRate);
+
+        if (monthsToFullGrowth <= 0) {
+            return "Скоро достигнет максимума";
+        } else if (monthsToFullGrowth == 1) {
+            return "Через 1 месяц";
+        } else if (monthsToFullGrowth < 12) {
+            return "Через " + monthsToFullGrowth + " мес.";
+        } else {
+            long years = monthsToFullGrowth / 12;
+            long months = monthsToFullGrowth % 12;
+            if (months == 0) {
+                return "Через " + years + " " + getYearWord(years);
+            } else {
+                return "Через " + years + " " + getYearWord(years) + " " + months + " мес.";
+            }
+        }
+    }
+
+    /**
      * Автокоррекция частоты полива по сезону
      */
     public void adjustWateringForSeason() {
