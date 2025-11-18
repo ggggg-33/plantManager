@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.plantmanager.ui.Controller" spacing="10" style="-fx-padding: 10;">
+
+    <VBox spacing="10" prefWidth="900">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Источник данных:"/>
+            <ChoiceBox fx:id="dataSourceChoiceBox" prefWidth="100"/>
+            <Button fx:id="selectDataSourceButton" text="Выбрать"/>
+            <Label text="Сортировка:"/>
+            <ChoiceBox fx:id="sortChoiceBox" prefWidth="120"/>
+            <TextField fx:id="filterField" promptText="Поиск по названию..." prefWidth="150"/>
+        </HBox>
+
+        <!-- Таблица растений -->
+        <VBox spacing="5" VBox.vgrow="ALWAYS">
+            <Label text="Список растений" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="plantTable" VBox.vgrow="ALWAYS">
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+
+        <!-- Уведомления -->
+        <VBox spacing="5" prefHeight="80">
+            <Label text="Уведомления по уходу" style="-fx-font-weight: bold;"/>
+            <TextArea fx:id="notificationsArea" prefHeight="60" editable="false"
+                      style="-fx-border-color: #FFA000; -fx-border-width: 2; -fx-background-color: #FFF8E1;"/>
+        </VBox>
+    </VBox>
+
+    <!-- Правая панель управления -->
+    <VBox spacing="15" prefWidth="300">
+        <!-- Панель управления растением -->
+        <VBox spacing="10" style="-fx-border-color: #BDBDBD; -fx-border-width: 1; -fx-padding: 10;">
+            <Label text="Управление растением" style="-fx-font-weight: bold;"/>
+
+            <!-- Основная информация -->
+            <TextField fx:id="nameField" promptText="Название растения"/>
+
+            <!-- Числовые параметры в строку -->
+            <HBox spacing="8">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Полив (дни)" style="-fx-font-size: 11px;"/>
+                    <TextField fx:id="wateringFrequencyField" promptText="Дни"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Высота (см)" style="-fx-font-size: 11px;"/>
+                    <TextField fx:id="currentHeightField" promptText="См"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Рост (см/мес)" style="-fx-font-size: 11px;"/>
+                    <TextField fx:id="growthRateField" promptText="См/мес"/>
+                </VBox>
+            </HBox>
+
+            <!-- Даты ухода -->
+            <VBox spacing="5">
+                <Label text="Даты ухода" style="-fx-font-weight: bold; -fx-font-size: 12px;"/>
+
+                <VBox spacing="3">
+                    <Label text="Посадка:" style="-fx-font-size: 11px;"/>
+                    <DatePicker fx:id="plantingDatePicker" promptText="Дата посадки"/>
+                </VBox>
+                <VBox spacing="3" HBox.hgrow="ALWAYS">
+                    <Label text="Последний полив:" style="-fx-font-size: 11px;"/>
+                    <DatePicker fx:id="lastWateringDatePicker" promptText="Полив"/>
+                </VBox>
+                <VBox spacing="3" HBox.hgrow="ALWAYS">
+                    <Label text="Последняя пересадка:" style="-fx-font-size: 11px;"/>
+                    <DatePicker fx:id="lastRepottingDatePicker" promptText="Пересадка"/>
+                </VBox>
+            </VBox>
+
+            <!-- Кнопки управления -->
+            <HBox spacing="8" alignment="CENTER">
+                <Button text="Добавить" onAction="#handleAddPlant"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                <Button text="Изменить" onAction="#handleUpdatePlant"
+                        style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+                <Button text="Удалить" onAction="#handleDeletePlant"
+                        style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+
+        <!-- Панель действий и диагностики -->
+        <VBox spacing="10" style="-fx-border-color: #BDBDBD; -fx-border-width: 1; -fx-padding: 10;">
+            <Label text="Действия с растениями" style="-fx-font-weight: bold;"/>
+
+            <!-- Быстрые действия -->
+            <HBox spacing="5">
+                <Button text="Полить" onAction="#handleWaterPlant"
+                        style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+                <Button text="Пересадить" onAction="#handleRepotPlant"
+                        style="-fx-background-color: #FF9800; -fx-text-fill: white;"/>
+                <Button text="Статистика" onAction="#handleShowStatistics"
+                        style="-fx-background-color: #9C27B0; -fx-text-fill: white;"/>
+            </HBox>
+
+            <!-- Диагностика здоровья -->
+            <Label text="Диагностика здоровья" style="-fx-font-weight: bold;"/>
+            <TextField fx:id="symptomsField" promptText="Опишите симптомы..."/>
+            <Button text="Диагностировать" onAction="#handleDiagnosePlant"
+                    style="-fx-background-color: #607D8B; -fx-text-fill: white;"/>
+            <TextArea fx:id="diagnosisArea" prefHeight="80" editable="false"
+                      promptText="Результат диагностики..."/>
+        </VBox>
+    </VBox>
+
+</HBox>
