@@ -186,10 +186,12 @@ public class Controller {
             return new SimpleStringProperty(date != null ? date.format(dateFormatter) : "—");
         });
 
+
         TableColumn<Plant, String> plantingDateCol = new TableColumn<>("Дата посадки");
         plantingDateCol.setCellValueFactory(cellData -> {
             LocalDate date = cellData.getValue().getPlantingDate();
             return new SimpleStringProperty(date != null ? date.format(dateFormatter) : "—");
+            
         });
 
         // Добавляем все колонки в таблицу (новая колонка добавлена после healthCol)
